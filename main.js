@@ -77,7 +77,12 @@ function changeHP(playerObj) {
 
 function playerWin(name) {
   const $winTitle = createElement('div', 'winTitle');
-  $winTitle.innerText = name + ' wins';
+
+  if (name) {
+    $winTitle.innerText = name + ' wins';
+  } else {
+    $winTitle.innerText = 'draw';
+  }
   return $winTitle;
 }
 
@@ -85,11 +90,15 @@ $randomButton.addEventListener('click', function () {
   changeHP(player1);
   changeHP(player2);
 
-  if (player1.hp === 0) {
+  if (player1.hp === 0 || player2.hp === 0) {
+    $randomButton.disabled = true;
+  }
+
+  if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
-    $randomButton.disabled = true;
-  } else if (player2.hp === 0) {
+  } else if (player2.hp === 0 && player2.hp < player1.hp) {
     $arenas.appendChild(playerWin(player1.name));
-    $randomButton.disabled = true;
+  } else if (player1.hp === 0 && player2.hp === 0) {
+    $arenas.appendChild(playerWin());
   }
 });
