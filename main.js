@@ -2,10 +2,10 @@ const $arenas = document.querySelector('.arenas');
 const $randomButton = document.querySelector('.button');
 
 function changeHP(max) {
+  this.hp -= getRandomIntInclusive(1, max);
+
   if (this.hp < 0) {
     this.hp = 0;
-  } else if (this.hp > 0) {
-    this.hp -= getRandomIntInclusive(1, max);
   }
 }
 
@@ -98,7 +98,7 @@ $randomButton.addEventListener('click', function () {
   player2.renderHP();
   console.log(player1.name + ': ' + player1.hp);
   console.log(player2.name + ': ' + player2.hp);
-  
+
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
 
