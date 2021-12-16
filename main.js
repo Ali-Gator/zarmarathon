@@ -163,13 +163,20 @@ function enemyAttack() {
 $formFight.addEventListener('submit', function (e) {
   e.preventDefault();
   const enemy = enemyAttack();
-  console.log(enemy);
-  
+ 
   const attack = {};
 
   for (let item of $formFight) {
-    
+    if (item.checked && item.name === 'hit') {
+      attack.value = getRandomIntInclusive(1, HIT[item.value])
+      attack.hit = item.value;
+    } 
+    if (item.checked && item.name === 'defence') {
+      attack.defence = item.value;
+    }
+    item.checked = false;
   }
+  console.log(attack);
 
 }
 )
