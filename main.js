@@ -1,6 +1,23 @@
 const $arenas = document.querySelector('.arenas');
 const $randomButton = document.querySelector('.button');
 
+function changeHP(max) {
+  this.hp -= getRandomIntInclusive(1, max);
+
+  if (this.hp < 0) {
+    this.hp = 0;
+  }
+}
+
+function elHP() {
+  return document.querySelector('.player' + this.player + ' .life');
+}
+
+function renderHP() {
+  const a = this.elHP();
+  return (a.style.width = this.hp + '%');
+}
+
 const player1 = {
   player: 1,
   name: 'Subzero',
@@ -8,8 +25,11 @@ const player1 = {
   img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
   weapon: ['gun', 'sword'],
   attack: function (name) {
-    console.log(name + ' Fight...');
+    console.log(this.name + ' Fight...');
   },
+  changeHP: changeHP,
+  elHP: elHP,
+  renderHP: renderHP,
 };
 
 const player2 = {
@@ -19,8 +39,11 @@ const player2 = {
   img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
   weapon: ['gun', 'sword'],
   attack: function (name) {
-    console.log(name + ' Fight...');
+    console.log(this.name + ' Fight...');
   },
+  changeHP: changeHP,
+  elHP: elHP,
+  renderHP: renderHP,
 };
 
 function createElement(tagName, className) {
@@ -62,19 +85,6 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function changeHP(playerObj) {
-  const $playerLife = document.querySelector(
-    '.player' + playerObj.player + ' .life'
-  );
-  playerObj.hp -= getRandomIntInclusive(1, 20);
-
-  if (playerObj.hp < 0) {
-    playerObj.hp = 0;
-  }
-
-  $playerLife.style.width = playerObj.hp + '%';
-}
-
 function playerWin(name) {
   const $winTitle = createElement('div', 'winTitle');
 
@@ -87,10 +97,25 @@ function playerWin(name) {
 }
 
 $randomButton.addEventListener('click', function () {
-  changeHP(player1);
-  changeHP(player2);
+  player1.changeHP(20);
+  player2.changeHP(20);
+  player1.renderHP();
+  player2.renderHP();
+  console.log(player1.name + ': ' + player1.hp);
+  console.log(player2.name + ': ' + player2.hp);
 
   if (player1.hp === 0 || player2.hp === 0) {
+    $randomButton.disabled = true;
+
+    const $reloadButton = createReloadButton();
+    $arenas.appendChild($reloadButton);
+    $reloadButton.addEventListener('click', function () {
+      window.location.reload();
+    });
+  }
+
+  if (player1.hp === 0 && player1.hp < player2.hp) {
+    $arenas.appendChild(playerWin(player2.name));
     $randomButton.disabled = true;
   }
 
@@ -102,3 +127,21 @@ $randomButton.addEventListener('click', function () {
     $arenas.appendChild(playerWin());
   }
 });
+
+function createReloadButton() {
+  const $divReload = createElement('div', 'reloadWrap');
+  const $elButton = createElement('button', 'button');
+
+  $divReload.style.position = 'absolute';
+  $divReload.style.top = '10%';
+  $divReload.style.zIndex = '1000';
+  $divReload.style.left = '50%';
+  $divReload.style.transform = 'translate(-50%, 0%)';
+
+  $elButton.style.marginTop = '0';
+  $elButton.innerText = 'restart';
+
+  $divReload.appendChild($elButton);
+
+  return $divReload;
+}
