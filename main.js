@@ -8,8 +8,8 @@ const HIT = {
 };
 const ATTACK = ['head', 'body', 'foot'];
 
-function changeHP(max) {
-  this.hp -= getRandomIntInclusive(1, max);
+function changeHP(value) {
+  this.hp -= value;
 
   if (this.hp < 0) {
     this.hp = 0;
@@ -31,9 +31,6 @@ const player1 = {
   hp: 100,
   img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
   weapon: ['gun', 'sword'],
-  attack: function (name) {
-    console.log(this.name + ' Fight...');
-  },
   changeHP,
   elHP,
   renderHP,
@@ -45,9 +42,6 @@ const player2 = {
   hp: 100,
   img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
   weapon: ['gun', 'sword'],
-  attack: function (name) {
-    console.log(this.name + ' Fight...');
-  },
   changeHP,
   elHP,
   renderHP,
@@ -132,10 +126,7 @@ function enemyAttack() {
   };
 }
 
-$formFight.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const enemy = enemyAttack();
-
+function playerAttack() {
   const attack = {};
 
   for (let item of $formFight) {
@@ -148,31 +139,10 @@ $formFight.addEventListener('submit', function (e) {
     }
     item.checked = false;
   }
-  
-  console.log('a', attack);
-  console.log('e', enemy);
+}
 
-  if (enemy.hit !== attack.defence) {
-    player1.hp -= enemy.value;
-    console.log(player1.hp);
-    if (player1.hp < 0) {
-      player1.hp = 0;
-    }
-    player1.renderHP();
-  }
-
-  if (attack.hit !== enemy.defence) {
-    player2.hp -= attack.value;
-    console.log(player2.hp);
-    if (player2.hp < 0) {
-      player2.hp = 0;
-    }
-    player2.renderHP();
-
-  }
-
+function showResult() {
   if (player1.hp === 0 || player2.hp === 0) {
-
     $fightButton.disabled = true;
 
     const $reloadButton = createReloadButton();
@@ -184,12 +154,26 @@ $formFight.addEventListener('submit', function (e) {
 
   if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
-  } 
-  if (player2.hp === 0 && player2.hp < player1.hp) {
+  } else if (player2.hp === 0 && player2.hp < player1.hp) {
     $arenas.appendChild(playerWin(player1.name));
-  }
-  if (player1.hp === 0 && player2.hp === 0) {
+  } else if (player1.hp === 0 && player2.hp === 0) {
     $arenas.appendChild(playerWin());
   }
+}
 
+$formFight.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const enemy = enemyAttack();
+  const player = playerAttack();
+
+  if (enemy.hit !== player.defence) {
+    player1.changeHP(enemy.value);
+    player1.renderHP();
+  }
+
+  if (player.hit !== enemy.defence) {
+    player2.changeHP(player.value);
+    player2.renderHP();
+  }
+  showResult();
 });
