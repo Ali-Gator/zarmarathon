@@ -37,7 +37,7 @@ export const player2 = {
   renderHP,
 };
 
-export function createPlayer(playerObj) {
+export const createPlayer = (playerObj) => {
   const $player = createElement('div', 'player' + playerObj.player);
   const $progressbar = createElement('div', 'progressbar');
   const $character = createElement('div', 'character');
@@ -58,4 +58,4 @@ export function createPlayer(playerObj) {
   $character.appendChild($img);
 
   return $player;
-}
+};

@@ -1,9 +1,9 @@
 import { $arenas, $fightButton } from './DOMelements.js';
 import createElement from './createElement.js';
-import { player1, player2, } from './player.js';
+import { player1, player2 } from './player.js';
 import generateLogs from './logs.js';
 
-function createReloadButton() {
+const createReloadButton = () => {
   const $divReload = createElement('div', 'reloadWrap');
   const $elButton = createElement('button', 'button');
 
@@ -19,9 +19,9 @@ function createReloadButton() {
   $divReload.appendChild($elButton);
 
   return $divReload;
-}
+};
 
-function playerWin(name) {
+const playerWin = (name) => {
   const $winTitle = createElement('div', 'winTitle');
 
   if (name) {
@@ -30,9 +30,9 @@ function playerWin(name) {
     $winTitle.innerText = 'draw';
   }
   return $winTitle;
-}
+};
 
-function showResult() {
+const showResult = () => {
   if (player1.hp === 0 || player2.hp === 0) {
     $fightButton.disabled = true;
     const $reloadButton = createReloadButton();
@@ -52,6 +52,6 @@ function showResult() {
     $arenas.appendChild(playerWin());
     generateLogs('draw');
   }
-}
+};
 
 export default showResult;

@@ -9,7 +9,7 @@ const HIT = {
 
 const ATTACK = ['head', 'body', 'foot'];
 
-export function enemyAttack() {
+ export const enemyAttack = () => {
   const hit = ATTACK[getRandomIntInclusive(0, 2)];
   const defence = ATTACK[getRandomIntInclusive(0, 2)];
 
@@ -18,9 +18,9 @@ export function enemyAttack() {
     hit,
     defence,
   };
-}
+};
 
-export function playerAttack() {
+export const playerAttack = () => {
   const attack = {};
 
   for (let item of $formFight) {
@@ -34,4 +34,4 @@ export function playerAttack() {
     item.checked = false;
   }
   return attack;
-}
+};
