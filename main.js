@@ -270,9 +270,15 @@ $formFight.addEventListener('submit', function (e) {
 
   const enemy = enemyAttack();
   const player = playerAttack();
+  console.log(enemy);
+  console.log(player);
 
-  if (enemy.hit !== player.defence) {
-    const damage = enemy.value;
+  const { value: enemyValue, hit: enemyHit, defence: enemyDefence } = enemy;
+  const { value: playerValue, hit: playerHit, defence: playerDefence } = player;
+
+
+  if (enemyHit !== playerDefence) {
+    const damage = enemyValue;
     player1.changeHP(damage);
     player1.renderHP();
     generateLogs('hit', player1, player2, damage);
@@ -280,8 +286,8 @@ $formFight.addEventListener('submit', function (e) {
     generateLogs('defence', player1, player2);
   }
 
-  if (player.hit !== enemy.defence) {
-    const damage = player.value;
+  if (playerHit !== enemyDefence) {
+    const damage = playerValue;
     player2.changeHP(damage);
     player2.renderHP();
     generateLogs('hit', player2, player1, damage);
