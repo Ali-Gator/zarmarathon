@@ -81,7 +81,7 @@ const generateLogs = (type, player1, player2, damage) => {
 
   switch (type) {
     case 'hit':
-      text = `${getTime()} - ${text} Урон: -${damage}. Остаток здоровья: ${player1.hp}`;
+      text = `${getTime()} - ${text} Урон: -${damage}. Остаток здоровья: ${player1.hp} из 100`;
       break;
 
     case 'defence':

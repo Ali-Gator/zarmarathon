@@ -9,12 +9,12 @@ function changeHP(value) {
 }
 
 function elHP() {
-  return document.querySelector('.player' + this.player + ' .life');
+  return document.querySelector(`.player${this.player} .life`);
 }
 
 function renderHP() {
   const a = this.elHP();
-  return (a.style.width = this.hp + '%');
+  return (a.style.width = `${this.hp}%`);
 }
 
 export const player1 = {
@@ -37,17 +37,17 @@ export const player2 = {
   renderHP,
 };
 
-export const createPlayer = (playerObj) => {
-  const $player = createElement('div', 'player' + playerObj.player);
+export const createPlayer = ({ player, hp, name, img }) => {
+  const $player = createElement('div', `player${player}`);
   const $progressbar = createElement('div', 'progressbar');
   const $character = createElement('div', 'character');
   const $life = createElement('div', 'life');
   const $name = createElement('div', 'name');
   const $img = createElement('img');
 
-  $life.style.width = playerObj.hp + '%';
-  $name.innerText = playerObj.name;
-  $img.src = playerObj.img;
+  $life.style.width = `${hp}%`;
+  $name.innerText = name;
+  $img.src = img;
 
   $player.appendChild($progressbar);
   $player.appendChild($character);
