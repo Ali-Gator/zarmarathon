@@ -11,6 +11,7 @@ export const attack = async () => {
     if (item.checked && item.name === 'defence') {
       playerInputs.defence = item.value;
     }
+    item.checked = false;
   }
 
   const data = await fetch('https://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
