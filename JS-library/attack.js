@@ -13,7 +13,7 @@ export const attack = async () => {
     }
   }
 
-  const data = fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+  const data = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
     method: 'POST',
     body: JSON.stringify(playerInputs),
   }).then((res) => res.json());
