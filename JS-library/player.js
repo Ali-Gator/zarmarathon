@@ -1,11 +1,12 @@
 import createElement from './createElement.js';
 
-class Player {
+export class Player {
   constructor(props) {
     this.player = props.player;
     this.name = props.name;
     this.hp = props.hp;
     this.img = props.img;
+    this.rootSelector = props.rootSelector;
   }
 
   changeHP = (value) => {
@@ -17,49 +18,35 @@ class Player {
   };
 
   elHP = () => {
-    console.log (this.player);
     return document.querySelector(`.player${this.player} .life`);
   };
 
   renderHP = () => {
-    const a = this.elHP();
-    return (a.style.width = `${this.hp}%`);
+    this.elHP().style.width = `${this.hp}%`;
+  };
+
+  createPlayer = () => {
+    const $player = createElement('div', `player${this.player}`);
+    const $progressbar = createElement('div', 'progressbar');
+    const $character = createElement('div', 'character');
+    const $life = createElement('div', 'life');
+    const $name = createElement('div', 'name');
+    const $img = createElement('img');
+    const $rootSelector = document.querySelector(`.${this.rootSelector}`);
+
+    $life.style.width = `${this.hp}%`;
+    $name.innerText = this.name;
+    $img.src = this.img;
+
+    $player.appendChild($progressbar);
+    $player.appendChild($character);
+
+    $progressbar.appendChild($life);
+    $progressbar.appendChild($name);
+
+    $character.appendChild($img);
+    console.log(this.rootSelector);
+
+    $rootSelector.appendChild($player);
   };
 }
-
-export const player1 = new Player({
-  player: 1,
-  name: 'Subzero',
-  hp: 100,
-  img: 'http://reactmarathon-api.herokuapp.com/assets/subzero.gif',
-});
-
-export const player2 = new Player({
-  player: 2,
-  name: 'Scorpion',
-  hp: 100,
-  img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
-});
-
-export const createPlayer = ({ player, hp, name, img }) => {
-  const $player = createElement('div', `player${player}`);
-  const $progressbar = createElement('div', 'progressbar');
-  const $character = createElement('div', 'character');
-  const $life = createElement('div', 'life');
-  const $name = createElement('div', 'name');
-  const $img = createElement('img');
-
-  $life.style.width = `${hp}%`;
-  $name.innerText = name;
-  $img.src = img;
-
-  $player.appendChild($progressbar);
-  $player.appendChild($character);
-
-  $progressbar.appendChild($life);
-  $progressbar.appendChild($name);
-
-  $character.appendChild($img);
-
-  return $player;
-};

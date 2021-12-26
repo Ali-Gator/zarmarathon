@@ -9,9 +9,10 @@ const HIT = {
 
 const ATTACK = ['head', 'body', 'foot'];
 
- export const enemyAttack = () => {
-  const hit = ATTACK[getRandomIntInclusive(0, 2)];
-  const defence = ATTACK[getRandomIntInclusive(0, 2)];
+export const enemyAttack = () => {
+  const length = ATTACK.length - 1;
+  const hit = ATTACK[getRandomIntInclusive(0, length)];
+  const defence = ATTACK[getRandomIntInclusive(0, length)];
 
   return {
     value: getRandomIntInclusive(1, HIT[hit]),
