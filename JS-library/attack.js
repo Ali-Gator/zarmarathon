@@ -1,38 +1,22 @@
-import getRandomIntInclusive from './utils.js';
 import { $formFight } from './DOMelements.js';
 
-const HIT = {
-  head: 30,
-  body: 25,
-  foot: 20,
-};
-
-const ATTACK = ['head', 'body', 'foot'];
-
-export const enemyAttack = () => {
-  const length = ATTACK.length - 1;
-  const hit = ATTACK[getRandomIntInclusive(0, length)];
-  const defence = ATTACK[getRandomIntInclusive(0, length)];
-
-  return {
-    value: getRandomIntInclusive(1, HIT[hit]),
-    hit,
-    defence,
-  };
-};
-
-export const playerAttack = () => {
-  const attack = {};
+export const attack = async () => {
+  const playerInputs = {};
 
   for (let item of $formFight) {
     if (item.checked && item.name === 'hit') {
-      attack.value = getRandomIntInclusive(1, HIT[item.value]);
-      attack.hit = item.value;
+      playerInputs.hit = item.value;
     }
+
     if (item.checked && item.name === 'defence') {
-      attack.defence = item.value;
+      playerInputs.defence = item.value;
     }
-    item.checked = false;
   }
-  return attack;
+
+  const data = fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+    method: 'POST',
+    body: JSON.stringify(playerInputs),
+  }).then((res) => res.json());
+
+  return data;
 };

@@ -45,7 +45,6 @@ export class Player {
     $progressbar.appendChild($name);
 
     $character.appendChild($img);
-    console.log(this.rootSelector);
 
     $rootSelector.appendChild($player);
   };

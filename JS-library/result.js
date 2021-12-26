@@ -1,6 +1,6 @@
 import { $arenas, $fightButton } from './DOMelements.js';
 import createElement from './createElement.js';
-import { player1, player2 } from '../main.js';
+import { player1, player2 } from './game.js';
 import generateLogs from './logs.js';
 
 const createReloadButton = () => {
