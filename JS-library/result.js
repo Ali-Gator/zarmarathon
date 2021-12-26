@@ -38,7 +38,7 @@ const showResult = () => {
     const $reloadButton = createReloadButton();
     $arenas.appendChild($reloadButton);
     $reloadButton.addEventListener('click', function () {
-      window.location.reload();
+      window.location.pathname = '../index.html';
     });
   }
 
