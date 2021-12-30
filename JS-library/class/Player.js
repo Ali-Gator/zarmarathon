@@ -1,6 +1,6 @@
-import createElement from './createElement.js';
+import { createElement } from '../utils.js';
 
-export class Player {
+class Player {
   constructor(props) {
     this.player = props.player;
     this.name = props.name;
@@ -49,3 +49,5 @@ export class Player {
     $rootSelector.appendChild($player);
   };
 }
+
+export default Player;

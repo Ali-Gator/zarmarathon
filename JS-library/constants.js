@@ -1,7 +1,4 @@
-import getRandomIntInclusive from './utils.js';
-import { $chat } from './DOMelements.js';
-
-const logs = {
+const LOGS = {
   start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
   end: [
     'Результат удара [playerWins]: [playerLose] - труп',
@@ -41,61 +38,4 @@ const logs = {
   draw: 'Ничья - это тоже победа!',
 };
 
-const getLogString = (logObj, index) => {
-  if (typeof logObj[index] === 'string') {
-    return logObj[index];
-  } else if (Array.isArray(logObj[index])) {
-    return logObj[index][getRandomIntInclusive(0, logObj[index].length - 1)];
-  }
-};
-
-const getTime = () => {
-  const date = new Date();
-  return `${date.getHours()}:${(date.getMinutes() < 10 ? '0' : '') + date.getMinutes()}`;
-};
-
-const generateText = (situation, player1, player2) => {
-  let logText = getLogString(logs, situation);
-
-  switch (situation) {
-    case 'start':
-      return logText
-        .replace('[time]', getTime())
-        .replace('[player1]', player1.name)
-        .replace('[player2]', player2.name);
-
-    case 'hit':
-    case 'defence':
-      return logText.replace('[playerDefence]', player1.name).replace('[playerKick]', player2.name);
-
-    case 'end':
-      return logText.replace('[playerWins]', player1.name).replace('[playerLose]', player2.name);
-
-    case 'draw':
-      return logText;
-  }
-};
-
-const generateLogs = (type, player1, player2, damage) => {
-  let text = generateText(type, player1, player2);
-
-  switch (type) {
-    case 'hit':
-      text = `${getTime()} - ${text} Урон: -${damage}. Остаток здоровья: ${player1.hp} из 100`;
-      break;
-
-    case 'defence':
-    case 'draw':
-    case 'end':
-      text = `${getTime()} - ${text}`;
-      break;
-
-    default:
-      text;
-      break;
-  }
-
-  $chat.insertAdjacentHTML('afterbegin', `<p>${text}</p>`);
-};
-
-export default generateLogs;
+export { LOGS };

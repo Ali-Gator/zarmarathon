@@ -1,6 +1,8 @@
-import { Game } from './game.js';
+import Game from './class/Game.js';
 
-const game = new Game();
+const $formFight = document.querySelector('.control');
+const $chat = document.querySelector('.chat');
+
+const game = new Game({ root: 'arenas', form: $formFight, chat: $chat });
 
 game.start();
-
