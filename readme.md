@@ -4,3 +4,5 @@
 * HTML
 * CSS
 * JS
+
+Try [on netlify](https://mortalbyoleg.netlify.app/)
