@@ -7,7 +7,7 @@
 * JS
 
 ### Ссылки
-[Запустить на Netlify](https://mortalbyoleg.netlify.app/)
+* [Запустить на Netlify](https://mortalbyoleg.netlify.app/)
 
 ### План работ
 * Переписать с использованием React
